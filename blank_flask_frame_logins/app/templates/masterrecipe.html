@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Dose Update{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h2>The Dose Updater 3000 </h2>
+</div>
+<div>
+	{{ wtf.quick_form(formdir) }}
+	{% if masterdirectory %}
+		<h4><font color='red'>Directory Selected: {{ masterdirectory }}</font></h4>
+		{{ wtf.quick_form(formrecipe) }}
+	{% else %}
+		<p>no directory selected</p>
+	{% endif %}
+
+</div>
+<div>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+</div>
+
+{% endblock %}

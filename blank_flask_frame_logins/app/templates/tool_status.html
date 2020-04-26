@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Tool Status{% endblock %}
+
+{% macro tool_status_table(tool_status_dict) %}
+  <table style="width:100%">
+    <tr>
+      <th style="width:10%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tool&nbsp;&nbsp;</th>
+      <th>Status</th>
+      <th>Last Comment</th>
+    </tr>
+  {% for tool, status in tool_status_dict.items() %}
+    <tr>
+      <td><a href="http://fab4www.cmi.cypress.com:8080/CMMS/faces/Tool_Dashboard.jsf?tool={{ tool }}" target="_blank">&nbsp; {{ tool }}  &nbsp;</a> </td>
+      <td>&nbsp;&nbsp;&nbsp;{{ status[1]|safe }}&nbsp;{{ status[0] }}&nbsp;&nbsp;&nbsp;</td>
+      <td>{{ status[2] }}</td>
+    </tr>
+  {% endfor %}
+
+  </table>
+{% endmacro %}
+
+{% block page_content %}
+<html>
+<body text="#000000" link="#0000FF" vlink="#800080" alink="#FF00FF">
+<style>
+  table, th, td {
+    border: 1px solid black;
+  	font-size: 15px;
+  	word-wrap:break-word;
+  }
+  tr.header2 {
+    background-color: #EAEDED;
+  }
+  tr.header1 {
+    background-color: #FDFEFE;
+  }
+  .tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+  }
+  .tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+  }
+  .tab button:hover {
+    background-color: #ddd;
+  }
+  .tab button.active {
+    background-color: #ccc;
+  }
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+</style>
+
+<h3> Photo Tool Status Overview </h3>
+<h4>&#9989; P : P</h4>
+<h4>&#9925; PD_T : P</h4>
+<h4>&#10067; Other, not good not bad, dunno.</h4>
+<h5>*Click tool link for CMS page</h5>
+<div class="tab" >
+  <button class="tablinks" onclick="openCity(event, 'tab1')" id="defaultOpen">Link</button>
+  <button class="tablinks" onclick="openCity(event, 'tab2')">Overlay</button>
+  <button class="tablinks" onclick="openCity(event, 'tab3')">CD SEM</button>
+</div>
+
+<div id='tab1' class='tabcontent'>
+  {{ tool_status_table(tool_link) }}
+</div>
+
+<div id = "tab2" class="tabcontent">
+  {{ tool_status_table(tool_overlay) }}
+</div>
+
+<div id = 'tab3' class='tabcontent'>
+  {{ tool_status_table(tool_cd) }}
+</div>
+
+
+<script>
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+document.getElementById("defaultOpen").click();
+</script>
+
+
+</body>
+</html>
+{% endblock %}

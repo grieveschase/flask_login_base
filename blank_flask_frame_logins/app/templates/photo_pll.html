@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Photo PLL{% endblock %}
+
+{% block page_content %}
+<style>
+table, th, td {
+  border: 1px solid black;
+	font-size: 16px;
+}
+tr.header3 {
+  background-color: #80e5ff;
+}
+tr.header2 {
+  background-color: #EAEDED;
+}
+tr.header1 {
+  background-color: #FDFEFE;
+}
+</style>
+
+<div class="page-header">
+    <h3>Photo PLLs</h3>
+</div>
+
+<div>
+	<h3>CD PLL</h3>
+	<table style="width:75%">
+		<tr>
+			<th>Lot</th>
+			<th>Step / Substep</th>
+			<th>Process</th>
+			<th>Device</th>
+			<th>Step Age</th>
+			<th>PLL Age</th>
+			<th>Qty</th>
+			<th>Eng Who</th>
+		</tr>
+		{% for lot in lots_cdpll %}
+			<tr>
+				<td>{{ lot.lot }} {{lot.split }}</td>
+				<td>{{lot.step }}&nbsp; /&nbsp;{{lot.substep }}</td>
+				<td>{{ lot.process }}</td>
+				<td>{{ lot.device }}</td>
+				<td>{{ lot.time_in  }}</td>
+				<td>{{ lot.pll_age }}</td>
+				<td>{{ lot.qty }}</td>
+				<td>{{ lot.eng_who }}</td>
+			</tr>
+			<tr>
+				<td colspan='8'><b>Prob</b></td>
+			</tr>
+			{% for line in lot.pll_comment_prob %}
+				<tr>
+					{% if line %}
+						<td colspan='8'>{{ line }}</td>
+					{% endif %}
+				</tr>
+			{% endfor %}
+
+			<tr>
+				<td colspan='8'><b>Eval</b></td>
+			</tr>
+
+			{% for line in lot.pll_comment_eval %}
+				<tr>
+					{% if  line %}
+						<td colspan='8'>{{ line }}</td>
+					{% endif %}
+				</tr>
+			{% endfor %}
+
+
+
+		{% endfor %}
+	</table>
+	
+</div>
+
+{% endblock %}
